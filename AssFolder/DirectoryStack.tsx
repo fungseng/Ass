@@ -221,9 +221,6 @@ const DirectoryStack = () => {
       <Stack.Screen name="G42" component={G42} options={{ title: "Map" }}/>
       <Stack.Screen name="L161" component={L161} options={{ title: "Map" }}/>
       <Stack.Screen name="L174" component={L174} options={{ title: "Map" }}/>
-
-      
-
     </Stack.Navigator>
 
   );
