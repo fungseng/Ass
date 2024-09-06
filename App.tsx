@@ -18,7 +18,7 @@ const CustomBottom = ({ children, onPress }: any) => {
       <View
         style={{
           width: 130,
-          backgroundColor: "#609146",
+          backgroundColor: "#c85757",
         }}
       >
         {children}
@@ -55,7 +55,7 @@ const App = () => {
               <MaterialCommunityIcons
                 name="greenhouse"
                 size={50}
-                color={focused ? "red" : "white"}
+                color={focused ? "#9d1807" : "white"}
               />
             ),
           }}
@@ -79,7 +79,7 @@ const App = () => {
           component={AdminLoginScreen}
           options={{
             tabBarIcon: ({ focused }) => (
-              <Icon name="greenhouse" size={50} color={focused ? "red" : "white"} />
+              <Icon name="account-box" size={50} color={focused ? "#9d1807" : "white"} />
             ),
           }}
         />
