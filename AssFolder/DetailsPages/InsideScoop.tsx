@@ -5,7 +5,7 @@ import { stores } from '../CommonData'; // Import the stores object
 import G05 from '../MapPages/G05';
 const InsideScoop = () => {
   const navigation = useNavigation();
-  const storeData = stores.enrichment.find(store => store.id === 3);
+  const storeData = stores.snacks.find(store => store.id === 3);
 
   return (
     <View style={styles.container}>
