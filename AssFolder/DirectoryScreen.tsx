@@ -38,7 +38,7 @@ const DirectoryScreen = () => {
 
   return (
     <View style={styles.container}>
-      <View>
+      <View style={styles.headerContainer}>
         <Text style={styles.headerText}>Directory</Text>
       </View>
       <View style={{ flex: 2 }}>
@@ -52,7 +52,7 @@ const DirectoryScreen = () => {
             style={[styles.button, activeTab === "Bakery" && styles.activeButton]}
             activeOpacity={0.7}
             onPress={() => handleScrollTo("Bakery")}>
-            <MaterialCommunityIcons name="bread" size={24} color={activeTab === "Bakery" ? "#fff" : "#000"} style={styles.icon} />
+            <MaterialCommunityIcons name="food-croissant" size={24} color={activeTab === "Bakery" ? "#fff" : "#000"} style={styles.icon} />
             <Text style={[styles.buttonText, activeTab === "Bakery" && styles.activeButtonText]}>Bakery</Text>
           </TouchableOpacity>
 
@@ -60,7 +60,7 @@ const DirectoryScreen = () => {
             style={[styles.button, activeTab === "Beauty" && styles.activeButton]}
             activeOpacity={0.7}
             onPress={() => handleScrollTo("Beauty")}>
-            <MaterialCommunityIcons name="store" size={24} color={activeTab === "Beauty" ? "#fff" : "#000"} style={styles.icon} />
+            <MaterialCommunityIcons name="face-woman-shimmer-outline" size={24} color={activeTab === "Beauty" ? "#fff" : "#000"} style={styles.icon} />
             <Text style={[styles.buttonText, activeTab === "Beauty" && styles.activeButtonText]}>Beauty and Service</Text>
           </TouchableOpacity>
 
@@ -76,7 +76,7 @@ const DirectoryScreen = () => {
             style={[styles.button, activeTab === "Department" && styles.activeButton]}
             activeOpacity={0.7}
             onPress={() => handleScrollTo("Department")}>
-            <MaterialCommunityIcons name="house" size={24} color={activeTab === "Department" ? "#fff" : "#000"} style={styles.icon} />
+            <MaterialCommunityIcons name="garage" size={24} color={activeTab === "Department" ? "#fff" : "#000"} style={styles.icon} />
             <Text style={[styles.buttonText, activeTab === "Department" && styles.activeButtonText]}>Department Stores</Text>
           </TouchableOpacity>
 
@@ -84,7 +84,7 @@ const DirectoryScreen = () => {
             style={[styles.button, activeTab === "Digital" && styles.activeButton]}
             activeOpacity={0.7}
             onPress={() => handleScrollTo("Digital")}>
-            <MaterialCommunityIcons name="electric-bolt" size={24} color={activeTab === "Digital" ? "#fff" : "#000"} style={styles.icon} />
+            <MaterialCommunityIcons name="tablet-android" size={24} color={activeTab === "Digital" ? "#fff" : "#000"} style={styles.icon} />
             <Text style={[styles.buttonText, activeTab === "Digital" && styles.activeButtonText]}>Digital and Home Appliances</Text>
           </TouchableOpacity>
 
@@ -92,7 +92,7 @@ const DirectoryScreen = () => {
             style={[styles.button, activeTab === "Fashion" && styles.activeButton]}
             activeOpacity={0.7}
             onPress={() => handleScrollTo("Fashion")}>
-            <MaterialCommunityIcons name="electric-bolt" size={24} color={activeTab === "Fashion" ? "#fff" : "#000"} style={styles.icon} />
+            <MaterialCommunityIcons name="shopping" size={24} color={activeTab === "Fashion" ? "#fff" : "#000"} style={styles.icon} />
             <Text style={[styles.buttonText, activeTab === "Fashion" && styles.activeButtonText]}>Fashion</Text>
           </TouchableOpacity>
 
@@ -100,7 +100,7 @@ const DirectoryScreen = () => {
             style={[styles.button, activeTab === "Enrichments" && styles.activeButton]}
             activeOpacity={0.7}
             onPress={() => handleScrollTo("Enrichments")}>
-            <MaterialCommunityIcons name="electric-bolt" size={24} color={activeTab === "Enrichments" ? "#fff" : "#000"} style={styles.icon} />
+            <MaterialCommunityIcons name="mother-heart" size={24} color={activeTab === "Enrichments" ? "#fff" : "#000"} style={styles.icon} />
             <Text style={[styles.buttonText, activeTab === "Enrichments" && styles.activeButtonText]}>Enrichments and Hobbies</Text>
           </TouchableOpacity>
 
@@ -108,7 +108,7 @@ const DirectoryScreen = () => {
             style={[styles.button, activeTab === "Food" && styles.activeButton]}
             activeOpacity={0.7}
             onPress={() => handleScrollTo("Food")}>
-            <MaterialCommunityIcons name="electric-bolt" size={24} color={activeTab === "Food" ? "#fff" : "#000"} style={styles.icon} />
+            <MaterialCommunityIcons name="food" size={24} color={activeTab === "Food" ? "#fff" : "#000"} style={styles.icon} />
             <Text style={[styles.buttonText, activeTab === "Food" && styles.activeButtonText]}>Food and Beverages</Text>
           </TouchableOpacity>
 
@@ -116,7 +116,7 @@ const DirectoryScreen = () => {
             style={[styles.button, activeTab === "Foodcourt" && styles.activeButton]}
             activeOpacity={0.7}
             onPress={() => handleScrollTo("Foodcourt")}>
-            <MaterialCommunityIcons name="electric-bolt" size={24} color={activeTab === "Foodcourt" ? "#fff" : "#000"} style={styles.icon} />
+            <MaterialCommunityIcons name="food-outline" size={24} color={activeTab === "Foodcourt" ? "#fff" : "#000"} style={styles.icon} />
             <Text style={[styles.buttonText, activeTab === "Foodcourt" && styles.activeButtonText]}>Foodcourt</Text>
           </TouchableOpacity>
 
@@ -124,7 +124,7 @@ const DirectoryScreen = () => {
             style={[styles.button, activeTab === "Entertainment" && styles.activeButton]}
             activeOpacity={0.7}
             onPress={() => handleScrollTo("Entertainment")}>
-            <MaterialCommunityIcons name="electric-bolt" size={24} color={activeTab === "Entertainment" ? "#fff" : "#000"} style={styles.icon} />
+            <MaterialCommunityIcons name="movie-outline" size={24} color={activeTab === "Entertainment" ? "#fff" : "#000"} style={styles.icon} />
             <Text style={[styles.buttonText, activeTab === "Entertainment" && styles.activeButtonText]}>Entertainment</Text>
           </TouchableOpacity>
 
@@ -132,7 +132,7 @@ const DirectoryScreen = () => {
             style={[styles.button, activeTab === "Health" && styles.activeButton]}
             activeOpacity={0.7}
             onPress={() => handleScrollTo("Health")}>
-            <MaterialCommunityIcons name="electric-bolt" size={24} color={activeTab === "Health" ? "#fff" : "#000"} style={styles.icon} />
+            <MaterialCommunityIcons name="heart-pulse" size={24} color={activeTab === "Health" ? "#fff" : "#000"} style={styles.icon} />
             <Text style={[styles.buttonText, activeTab === "Health" && styles.activeButtonText]}>Health and Wellness</Text>
           </TouchableOpacity>
 
@@ -140,7 +140,7 @@ const DirectoryScreen = () => {
             style={[styles.button, activeTab === "Lifestyle" && styles.activeButton]}
             activeOpacity={0.7}
             onPress={() => handleScrollTo("Lifestyle")}>
-            <MaterialCommunityIcons name="electric-bolt" size={24} color={activeTab === "Lifestyle" ? "#fff" : "#000"} style={styles.icon} />
+            <MaterialCommunityIcons name="sofa-outline" size={24} color={activeTab === "Lifestyle" ? "#fff" : "#000"} style={styles.icon} />
             <Text style={[styles.buttonText, activeTab === "Lifestyle" && styles.activeButtonText]}>Lifestyle and Home Living</Text>
           </TouchableOpacity>
 
@@ -148,7 +148,7 @@ const DirectoryScreen = () => {
             style={[styles.button, activeTab === "Convienience" && styles.activeButton]}
             activeOpacity={0.7}
             onPress={() => handleScrollTo("Convienience")}>
-            <MaterialCommunityIcons name="electric-bolt" size={24} color={activeTab === "Convienience" ? "#fff" : "#000"} style={styles.icon} />
+            <MaterialCommunityIcons name="store" size={24} color={activeTab === "Convienience" ? "#fff" : "#000"} style={styles.icon} />
             <Text style={[styles.buttonText, activeTab === "Convienience" && styles.activeButtonText]}>Convienience and Services</Text>
           </TouchableOpacity>
 
@@ -157,7 +157,7 @@ const DirectoryScreen = () => {
             style={[styles.button, activeTab === "Snacks" && styles.activeButton]}
             activeOpacity={0.7}
             onPress={() => handleScrollTo("Snacks")}>
-            <MaterialCommunityIcons name="electric-bolt" size={24} color={activeTab === "Snacks" ? "#fff" : "#000"} style={styles.icon} />
+            <MaterialCommunityIcons name="cupcake" size={24} color={activeTab === "Snacks" ? "#fff" : "#000"} style={styles.icon} />
             <Text style={[styles.buttonText, activeTab === "Snacks" && styles.activeButtonText]}>Snacks and Desserts</Text>
           </TouchableOpacity>
 
@@ -165,13 +165,13 @@ const DirectoryScreen = () => {
             style={[styles.button, activeTab === "Sports" && styles.activeButton]}
             activeOpacity={0.7}
             onPress={() => handleScrollTo("Sports")}>
-            <MaterialCommunityIcons name="electric-bolt" size={24} color={activeTab === "Sports" ? "#fff" : "#000"} style={styles.icon} />
+            <MaterialCommunityIcons name="shoe-cleat" size={24} color={activeTab === "Sports" ? "#fff" : "#000"} style={styles.icon} />
             <Text style={[styles.buttonText, activeTab === "Sports" && styles.activeButtonText]}>Sports and Shoes</Text>
           </TouchableOpacity>
         </ScrollView>
       </View>
 
-      <View style={{ flex: 12, paddingBottom: 100 }}>
+      <View style={{ flex: 14, paddingBottom: 100 }}>
         <ScrollView ref={scrollViewRef} style={styles.content}>
           <View onLayout={(event) => storeSectionPosition("Bakery", event)}>
             <StoreSection title="Bakery Section" storeData={stores.bakery} onPress={handlePress} />
@@ -243,56 +243,30 @@ const StoreSection = ({ title, storeData, onPress }: { title: string; storeData:
 );
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "flex-start",
-  },
-  tabContainer: {
-    flex: 2,
-  },
-  scrollViewContainer: {
-    alignItems: "center",
-    paddingHorizontal: 5,
-    backgroundColor: "#eee",
-  },
+  container: {flex: 1,justifyContent: "flex-start",},
+  tabContainer: {flex: 2,},
+  scrollViewContainer: {alignItems: "center",paddingHorizontal: 5,backgroundColor: "#eee",},
   button: {
     flexDirection: "row",
     alignItems: "center",
     paddingVertical: 5,
-    paddingHorizontal: 8,
+    paddingHorizontal: 6,
     backgroundColor: "#ddd",
     borderRadius: 8,
     marginHorizontal: 5,
   },
-  activeButton: {
-    backgroundColor: "#007bff",
-  },
-  icon: {
-    marginRight: 5,
-  },
-  buttonText: {
-    fontSize: 14,
-    color: "#000",
-  },
-  activeButtonText: {
-    color: "#fff",
-  },
-  content: {
-    flex: 8,
-    paddingTop: 2,
-  },
-  section: {
-    marginBottom: 20,
-  },
-  contentText: {
-    fontSize: 20,
-    marginBottom: 10,
-  },
+  activeButton: {backgroundColor: "#c85757",},
+  icon: { marginRight: 5,},
+  buttonText: {fontSize: 14,color: "#000",},
+  activeButtonText: {color: "#fff",},
+  content: {flex: 8,paddingTop:2,},
+  section: {marginBottom: 10,},
+  contentText: {fontSize: 20,marginBottom: 8,marginLeft:6},
   storeBox: {
     flexDirection: 'row',
     alignItems: 'center',
     padding: 10,
-    marginBottom: 10,
+    marginBottom: 5,
     backgroundColor: '#f9f9f9',
     borderRadius: 8,
     shadowColor: '#000',
@@ -302,8 +276,8 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   storeImage: {
-    width: 60,
-    height: 60,
+    width: 100,
+    height: 100,
     borderRadius: 8,
     marginRight: 10,
   },
@@ -311,17 +285,27 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   storeName: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
+    color:'black'
   },
   storeFloor: {
-    fontSize: 14,
-    color: '#777',
+    fontSize: 16,
+    color: '#494949',
   },
   headerText: {
     fontSize: 24,
     fontWeight: 'bold',
-    margin: 16,
+    textAlign:'center',
+    backgroundColor:'#c85757',
+    color:'#473636'
+
+  },
+  headerContainer: { // Added a new style for the header container
+    height: 64, // Adjust the height as per your requirement
+    justifyContent: 'center', // Center the text vertically
+    backgroundColor: '#c85757', // Keep the background color
+    paddingHorizontal: 20, // Add some padding for a better look
   },
 });
 
