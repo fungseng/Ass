@@ -1,48 +1,57 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Image, TouchableOpacity, Text } from "react-native";
-
+import { View, StyleSheet, Image, TouchableOpacity, Text, ScrollView } from "react-native";
 
 const L151 = () => {
   const [imageSource, setImageSource] = useState(require('./MapImg/L151.png'));
 
   return (
     <View style={styles.container}>
-      <Image source={imageSource} style={styles.image} />
-      <View style={styles.tabContainer}>
-        <TouchableOpacity style={styles.button}
-          onPress={() => {setImageSource(require('./MapImg/G.png'));
+      <ScrollView
+        horizontal
+        contentContainerStyle={styles.scrollViewContent}
+        showsHorizontalScrollIndicator={false}
+      >
+        <Image source={imageSource} style={styles.image} />
+      </ScrollView>
 
-          }}>
+      <View style={styles.tabContainer}>
+        <TouchableOpacity 
+          style={styles.button}
+          onPress={() => setImageSource(require('./MapImg/G.png'))}
+        >
           <Text style={styles.buttonText}>G</Text>
         </TouchableOpacity>
-
-        <TouchableOpacity style={styles.button}
-          onPress={() => {setImageSource(require('./MapImg/L151.png'));
-          }}>
+        <TouchableOpacity 
+          style={styles.button}
+          onPress={() => setImageSource(require('./MapImg/L151.png'))}
+        >
           <Text style={styles.buttonText}>F1</Text>
         </TouchableOpacity>
-
-        <TouchableOpacity style={styles.button}
-          onPress={() => {setImageSource(require('./MapImg/L2.png'));
-          }}>
+        <TouchableOpacity 
+          style={styles.button}
+          onPress={() => setImageSource(require('./MapImg/L2.png'))}
+        >
           <Text style={styles.buttonText}>F2</Text>
         </TouchableOpacity>
-
-        <TouchableOpacity style={styles.button}
-          onPress={() => { setImageSource(require('./MapImg/L3.png'));
-          }}>
+        <TouchableOpacity 
+          style={styles.button}
+          onPress={() => setImageSource(require('./MapImg/L3.png'))}
+        >
           <Text style={styles.buttonText}>F3</Text>
         </TouchableOpacity>
-
       </View>
     </View>
   );
 };
-export default L151;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
+  },
+  scrollViewContent: {
+    width: '200%', // Adjust this value based on the width of your images or content
+    paddingLeft: 70,
   },
   image: {
     width: '100%',
@@ -54,7 +63,6 @@ const styles = StyleSheet.create({
     top: 140, // Adjust this value to move the tab higher
     left: 10,
     width: 55, // Adjust the width to control the width of the buttons
-    // Use flex to arrange buttons vertically
     flexDirection: 'column',
     alignItems: 'center',
   },
@@ -64,7 +72,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 10,
     width: '100%', // Make buttons take up the full width of the tabContainer
-    alignItems: 'center', // Center text inside button
+    alignItems: 'center',
   },
   buttonText: {
     color: 'white',
@@ -72,4 +80,4 @@ const styles = StyleSheet.create({
   },
 });
 
-
+export default L151;
