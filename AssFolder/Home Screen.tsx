@@ -25,7 +25,7 @@ const HomeScreen = ({ navigation }: any) => {
         </View>
         <Text style={styles.copyright}>Copyright © 2024 Shopping Mall Guide Sdn Bhd</Text>
         <Text style={styles.copyright}>All rights reserved. This guide and all content herein are the property of City Center Mall and may not be reproduced, distributed, or transmitted in any form without prior written permission.</Text>
-        
+       
       </View>
     </SafeAreaView>
   )

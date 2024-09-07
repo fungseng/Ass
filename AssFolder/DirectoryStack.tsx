@@ -105,6 +105,7 @@ const Stack = createStackNavigator();
 const DirectoryStack = () => {
   return (
     <Stack.Navigator>
+       <Stack.Screen name="DirectoryScreen" component={DirectoryScreen} />
       <Stack.Screen
         name="Directory"
         component={DirectoryScreen}

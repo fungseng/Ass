@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
-import {View,
+import {
+  View,
   Text,
   TouchableOpacity,
   StyleSheet,
@@ -8,18 +9,33 @@ import {View,
   Image,
   LayoutChangeEvent,
 } from "react-native";
+import { FloatingAction } from 'react-native-floating-action';
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { stores, Store } from "./CommonData"; // Update with your actual path
 import { useNavigation } from '@react-navigation/native';
+import { useUserRole } from './UserRoleContext'; // Context to get the user role
+import CreateScreen from './CreateScreen';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from './App'; 
 
 const { height } = Dimensions.get('window');
+type DirectoryScreenNavigationProp = StackNavigationProp<RootStackParamList, 'DirectoryScreen'>;
+const actionsForAdmin = [
+  {
+    text: 'Add',
+    icon: require('../icons/add_icon.png'), // Make sure to provide the correct path to the icon
+    name: 'add',
+    position: 1,
+  },
+];
 
 const DirectoryScreen = () => {
   const [activeTab, setActiveTab] = useState("Bakery"); // Track the active tab
   const scrollViewRef = useRef<ScrollView>(null);
   const sectionPositions = useRef<{ [key: string]: number }>({}); // Store positions of sections
-  const navigation = useNavigation();
 
+  const { userRole } = useUserRole();
+  const navigation = useNavigation<DirectoryScreenNavigationProp>(); // Use typed navigation
   const handleScrollTo = (section: string) => {
     setActiveTab(section); // Set active tab when a button is pressed
     if (sectionPositions.current[section]) {
@@ -35,12 +51,24 @@ const DirectoryScreen = () => {
   const handlePress = (storeName: string) => {
     navigation.navigate(storeName); // Navigate to the specific store screen
   };
+  const handleActionPress = (name: string) => {
+    console.log('Action pressed:', name); // Debugging line
+    if (name === 'add') {
+      console.log('Navigating to CreateScreen'); // Debugging line
+      navigation.navigate( 'CreateScreen');
+
+    }
+  };
+ 
+  
+  const Actions = [...(userRole === 'admin' ? actionsForAdmin : [])];
 
   return (
     <View style={styles.container}>
       <View>
         <Text style={styles.headerText}>Directory</Text>
       </View>
+    
       <View style={{ flex: 2 }}>
         <ScrollView
           horizontal={true}
@@ -221,6 +249,17 @@ const DirectoryScreen = () => {
             <StoreSection title="Sports and Shoes Section" storeData={stores.sports} onPress={handlePress} />
           </View>
         </ScrollView>
+        <View style={styles.floatingActionContainer}>
+      {userRole === 'admin' && (
+        <FloatingAction
+          actions={Actions}
+          onPressItem={(name) => handleActionPress(name)}
+          color="blue"
+         
+        />
+      )}
+     
+      </View>
       </View>
     </View>
   );
@@ -237,7 +276,9 @@ const StoreSection = ({ title, storeData, onPress }: { title: string; storeData:
           <Text style={styles.storeName}>{store.name}</Text>
           <Text style={styles.storeFloor}>{store.floor}</Text>
         </View>
+        
       </TouchableOpacity>
+      
     ))}
   </View>
 );
@@ -322,6 +363,9 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     margin: 16,
+  },
+  floatingActionContainer: {
+    bottom: 30,
   },
 });
 

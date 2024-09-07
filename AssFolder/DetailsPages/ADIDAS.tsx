@@ -1,11 +1,67 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { stores } from '../CommonData'; // Import the stores object
+import { useUserRole } from '../UserRoleContext'; // Context to get the user role
+import { FloatingAction } from 'react-native-floating-action';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import G42 from '../MapPages/G42';
 const ADIDAS = () => {
   const navigation = useNavigation();
   const storeData = stores.sports.find(store => store.id === 1);
+  const { userRole } = useUserRole(); 
+  // Edit function
+  const handleEdit = () => {
+    // Navigate to an Edit Screen with storeData as a parameter
+    navigation.navigate('EditScreen', { storeData });
+  };
+
+  // Delete function
+  const handleDelete = () => {
+    // Confirmation alert
+    Alert.alert(
+      'Delete Store',
+      'Are you sure you want to delete this store?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: () => {
+            // Logic to delete the store
+            console.log('Store deleted'); // Replace with your delete logic
+          },
+        },
+      ],
+      { cancelable: true }
+    );
+  };
+
+  const actionsForAdmin = [
+    {
+      text: 'Edit',
+      icon: require('../../icons/edit_icon.png'), // Provide the correct path to the icon
+      name: 'edit',
+      position: 1,
+    },
+    {
+      text: 'Delete',
+      icon: require('../../icons/delete_icon.jpg'), // Provide the correct path to the icon
+      name: 'delete',
+      position: 2,
+    },
+  ];
+
+  const handleActionPress = (name) => {
+    if (name === 'edit') handleEdit();
+    else if (name === 'delete') handleDelete();
+  };
+
+  const Actions = [...(userRole === 'admin' ? actionsForAdmin : [])];
+
 
   return (
     <View style={styles.container}>
@@ -28,15 +84,21 @@ const ADIDAS = () => {
         </TouchableOpacity>
       </View>
       <Text style={styles.description}>{storeData?.description}</Text>
+        {/* Floating Action Buttons (Visible only for admins) */}
+        {userRole === 'admin' && (
+        <FloatingAction
+          actions={Actions}
+          onPressItem={handleActionPress}
+          floatingIcon={<MaterialCommunityIcons name="plus" size={24} color="#fff" />}
+        />
+      )}
     </View>
+
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
+  container: { flex: 1, padding: 16, bottom: 50, },
   storeImage: {
     width: '100%',
     height: 200,
