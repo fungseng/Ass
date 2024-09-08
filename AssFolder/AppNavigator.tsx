@@ -16,6 +16,7 @@ const AppNavigator = () => {
     <Stack.Navigator initialRouteName="DirectoryScreen">
       <Stack.Screen name="DirectoryScreen" component={DirectoryScreen} />
       <Stack.Screen name="CreateScreen" component={CreateScreen} />
+      <Stack.Screen name="HomeScreen" component={HomeScreen} />
       {/* Other screens can be added here */}
     </Stack.Navigator>
   );

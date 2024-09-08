@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, Button, Alert, ScrollView } from 'react-native';
-import RNFS from 'react-native-fs';
 import { Picker } from '@react-native-picker/picker';
 
 const CreateScreen = () => {
-  const [storeName, setStoreName] = useState('');
-  const [category, setCategory] = useState('');
-  const [floor, setFloor] = useState('');
-  const [phone, setPhone] = useState('');
-  const [description, setDescription] = useState('');
+  const [storeName, setStoreName] = useState<string>('');
+  const [category, setCategory] = useState<string>('');
+  const [floor, setFloor] = useState<string>('');
+  const [phone, setPhone] = useState<string>('');
+  const [description, setDescription] = useState<string>('');
 
   // List of categories
   const categories = [
@@ -29,120 +28,69 @@ const CreateScreen = () => {
     'Sports and Shoes',
   ];
 
-  // Function to check if file exists and create if not
-  const checkAndCreateFile = async (filePath) => {
-    try {
-      const fileExists = await RNFS.exists(filePath);
-      if (!fileExists) {
-        await RNFS.writeFile(filePath, '', 'utf8'); // Create an empty file
-        console.log(`File created at: ${filePath}`);
-      }
-    } catch (error) {
-      console.error(`Failed to create or access file at ${filePath}:`, error);
-    }
-  };
-
-  // Function to create the new store file
-  const createStoreFile = async () => {
+  // Function to create store dynamically
+  const createStore = async (): Promise<void> => {
     if (!storeName || !category || !floor || !phone || !description) {
       Alert.alert('Error', 'Please fill in all fields.');
       return;
     }
 
-    // Store Component Template with Placeholder Image
-    const storeComponent = `
-import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity, Alert } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { useUserRole } from '../UserRoleContext'; // Context to get the user role
-import { FloatingAction } from 'react-native-floating-action';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
-const ${storeName} = () => {
-  const navigation = useNavigation();
-  const { userRole } = useUserRole(); 
-  
-  const handleEdit = () => {
-    navigation.navigate('EditScreen', { storeData: { name: '${storeName}', category: '${category}', floor: '${floor}', phone: '${phone}', description: '${description}' } });
-  };
-
-  const handleDelete = () => {
-    Alert.alert(
-      'Delete Store',
-      'Are you sure you want to delete this store?',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        { text: 'Delete', style: 'destructive', onPress: () => console.log('Store deleted') }, // Replace with your delete logic
-      ],
-      { cancelable: true }
-    );
-  };
-
-  const actionsForAdmin = [
-    { text: 'Edit', icon: require('../../icons/edit_icon.png'), name: 'edit', position: 1 },
-    { text: 'Delete', icon: require('../../icons/delete_icon.jpg'), name: 'delete', position: 2 },
-  ];
-
-  const handleActionPress = (name) => {
-    if (name === 'edit') handleEdit();
-    else if (name === 'delete') handleDelete();
-  };
-
-  const Actions = [...(userRole === 'admin' ? actionsForAdmin : [])];
-
-  return (
-    <View style={styles.container}>
-      <Image source={require('../images/placeholder.png')} style={styles.storeImage} />
-      <View style={styles.storeInfo}>
-        <Text style={styles.category}>${category}</Text>
-        <Text style={styles.storeName}>${storeName}</Text>
-        <Text style={styles.floor}>${floor}</Text>
-        <Text style={styles.phoneNumber}>${phone}</Text>
-        <Text style={styles.description}>${description}</Text>
-      </View>
-      {userRole === 'admin' && (
-        <FloatingAction
-          actions={Actions}
-          onPressItem={handleActionPress}
-          floatingIcon={<MaterialCommunityIcons name="plus" size={24} color="#fff" />}
-        />
-      )}
-    </View>
-  );
-};
-
-const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16 },
-  storeImage: { width: '100%', height: 200, borderRadius: 10, marginBottom: 16 },
-  storeInfo: { marginBottom: 16 },
-  category: { fontSize: 16, fontWeight: '600', color: '#555' },
-  storeName: { fontSize: 20, fontWeight: 'bold', marginTop: 4 },
-  floor: { fontSize: 16, marginTop: 4, color: '#777' },
-  phoneNumber: { fontSize: 16, color: '#777', marginTop: 4 },
-  description: { fontSize: 16, marginTop: 16, lineHeight: 24, color: '#333' },
-});
-
-export default ${storeName};
-`;
-
-    const filePath = `${RNFS.DocumentDirectoryPath}/Assfolder/DetailPages/${storeName}.tsx`;
+    const storeData = {
+      category,
+      floor,
+      phone,
+      description,
+      mapLocation: 'MapComponent', // Adjust this as needed
+      id: storeName.replace(/\s+/g, '_'), // Ensure the ID is unique
+    };
 
     try {
-      await checkAndCreateFile(filePath); // Ensure file exists before writing
-      await RNFS.writeFile(filePath, storeComponent, 'utf8');
-      Alert.alert('Success', `Store ${storeName} created successfully!`);
+      console.log('Sending request to server with body:', {
+        storeName,
+        storeData,
+      });
+
+      const response = await fetch('http://10.0.2.2:3000/create-store', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          storeName,
+          storeData,
+        }),
+      });
+
+      const result = await response.json();
+      console.log('Server response:', result);
+
+      if (response.ok) {
+        Alert.alert('Success', result.message);
+      } else {
+        Alert.alert('Error', result.message || 'An error occurred');
+      }
     } catch (err) {
+      console.error('Failed to create store:', err);
       Alert.alert('Error', `Failed to create store: ${err.message}`);
     }
   };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      {/* Form Inputs and Button for creating store */}
       <Text style={styles.label}>Store Name:</Text>
-      <TextInput style={styles.input} value={storeName} onChangeText={setStoreName} placeholder="Enter store name" />
+      <TextInput
+        style={styles.input}
+        value={storeName}
+        onChangeText={setStoreName}
+        placeholder="Enter store name"
+      />
 
       <Text style={styles.label}>Category:</Text>
-      <Picker selectedValue={category} onValueChange={(itemValue) => setCategory(itemValue)}>
+      <Picker
+        selectedValue={category}
+        onValueChange={(itemValue) => setCategory(itemValue)}
+      >
         <Picker.Item label="Select a category" value="" />
         {categories.map((cat) => (
           <Picker.Item key={cat} label={cat} value={cat} />
@@ -150,10 +98,20 @@ export default ${storeName};
       </Picker>
 
       <Text style={styles.label}>Floor:</Text>
-      <TextInput style={styles.input} value={floor} onChangeText={setFloor} placeholder="Enter floor" />
+      <TextInput
+        style={styles.input}
+        value={floor}
+        onChangeText={setFloor}
+        placeholder="Enter floor"
+      />
 
       <Text style={styles.label}>Phone:</Text>
-      <TextInput style={styles.input} value={phone} onChangeText={setPhone} placeholder="Enter phone number" keyboardType="phone-pad" />
+      <TextInput
+        style={styles.input}
+        value={phone}
+        onChangeText={setPhone}
+        placeholder="Enter phone number"
+      />
 
       <Text style={styles.label}>Description:</Text>
       <TextInput
@@ -161,19 +119,17 @@ export default ${storeName};
         value={description}
         onChangeText={setDescription}
         placeholder="Enter description"
-        multiline
-        numberOfLines={4}
       />
 
-      <Button title="Create Store" onPress={createStoreFile} />
+      <Button title="Create Store" onPress={createStore} />
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flexGrow: 1, padding: 16, backgroundColor: '#fff' },
-  label: { fontSize: 16, marginVertical: 8 },
-  input: { borderColor: '#ccc', borderWidth: 1, padding: 8, marginBottom: 16, borderRadius: 5 },
+  container: { flex: 1, padding: 16 },
+  label: { fontSize: 18, marginBottom: 8 },
+  input: { borderWidth: 1, borderColor: '#ccc', padding: 8, marginBottom: 16 },
 });
 
 export default CreateScreen;

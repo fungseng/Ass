@@ -1,0 +1,8 @@
+Admin Access
+the admin name and username is both 1, this can be changed in AssFolder/AdminLoginScreen.tsx
+it is currently set like this for testing conviences.
+
+Add function
+To add, login as admin
+Have another terminal open, move to shopping-mall-guide-backend and 
+enter node server.js in the terminal.

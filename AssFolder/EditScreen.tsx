@@ -1,172 +1,90 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, View, Alert } from 'react-native';
-import { InputWithLabel, PickerWithLabel, AppButton } from './UI';
-let common = require('./CommonData');
-let SQLite = require('react-native-sqlite-storage');
+import React, { useState } from "react";
+import { View, Text, TextInput, Button, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
-const openCallback = () => {
-  console.log('Database opened successfully');
-};
+interface Store {
+  id: string;
+  name: string;
+  category: string;
+  floor: string;
+  localImage: { uri: string };
+}
 
-const errorCallback = (err: any) => {
-  console.log('Error in opening the database: ' + err);
-};
+interface EditScreenProps {
+  route: {
+    params: {
+      store?: Store;
+      updateStore?: (updatedStore: Store) => void;
+    };
+  };
+}
 
-const EditScreen = ({ route, navigation }: any) => {
-  const [storeID, setStoreID] = useState(route.params.id);
-  const [photo, setPhoto] = useState('');
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [category, setCategory] = useState('01');
-  const [floor, setFloor] = useState('01');
-  const [exfloor, setExfloor] = useState('');
-  const [description, setDescription] = useState('');
+const EditScreen: React.FC<EditScreenProps> = ({ route }) => {
+  const { store, updateStore } = route.params || {};
+  const navigation = useNavigation();
 
-  let db = SQLite.openDatabase(
-    { name: 'db.sqlite', createFromLocation: '~db.sqlite' },
-    openCallback,
-    errorCallback
-  );
+  if (!store || !updateStore) {
+    return (
+      <View style={styles.errorContainer}>
+        <Text style={styles.errorText}>Error: Store data not provided.</Text>
+        <Button title="Go Back" onPress={() => navigation.goBack()} />
+      </View>
+    );
+  }
 
-  const _query = () => {
-    try {
-      db.transaction((tx: any) => {
-        tx.executeSql(
-          'SELECT * FROM stores WHERE id = ?',
-          [storeID],
-          (tx: any, results: any) => {
-            if (results.rows.length) {
-              setPhoto(results.rows.item(0).photo);
-              setName(results.rows.item(0).name);
-              setPhone(results.rows.item(0).phone);
-              setCategory(results.rows.item(0).category);
-              setFloor(results.rows.item(0).floor);
-              setExfloor(results.rows.item(0).exfloor);
-              setDescription(results.rows.item(0).description);
-            }
-          }
-        );
-      });
-    } catch (error) {
-      console.error(error);
-      Alert.alert('Error', 'Failed to load store data!');
+  const [storeName, setStoreName] = useState(store.name);
+  const [storeCategory, setStoreCategory] = useState(store.category);
+  const [storeFloor, setStoreFloor] = useState(store.floor);
+  const [localImage, setLocalImage] = useState(store.localImage.uri);
+
+  const handleUpdate = () => {
+    if (storeName && storeCategory && storeFloor) {
+      const updatedStore: Store = {
+        ...store,
+        name: storeName,
+        category: storeCategory.toLowerCase(),
+        floor: storeFloor,
+        localImage: { uri: localImage },
+      };
+      updateStore(updatedStore); 
+      navigation.goBack(); 
+    } else {
+      alert("Please fill in all fields.");
     }
   };
 
-  useEffect(() => {
-    _query();
-  }, []); // Runs once when the component is mounted
-
-  const _update = () => {
-    db.transaction(
-      (tx: any) => {
-        tx.executeSql(
-          'UPDATE stores SET photo=?, name=?, phone=?, category=?, floor=?, exfloor=?, description=? WHERE id=?',
-          [photo, name, phone, category, floor, exfloor, description, storeID],
-          (tx: any, results: any) => {
-            if (results.rowsAffected > 0) {
-              Alert.alert('Success', 'Store updated successfully!');
-              route.params.refresh(storeID);
-              route.params.homeRefresh();
-              navigation.goBack();
-            } else {
-              Alert.alert('Error', 'Failed to update the store!');
-            }
-          },
-          (error: any) => {
-            console.error('Error updating store: ', error);
-            Alert.alert('Error', 'An error occurred while updating the store.');
-          }
-        );
-      },
-      (error: any) => {
-        console.error('Transaction error: ', error);
-        Alert.alert('Error', 'Transaction failed. Please try again.');
-      }
-    );
+  const handleSelectImage = () => {
+    alert("Image picker functionality goes here.");
   };
 
   return (
     <View style={styles.container}>
-      <ScrollView>
-        <InputWithLabel
-          textLabelStyle={styles.TextLabel}
-          textInputStyle={styles.TextInput}
-          label={'Photo'}
-          placeholder={'Place store photo here'}
-          value={photo}
-          onChangeText={(photo: any) => setPhoto(photo)}
-          orientation={'vertical'}
-        />
-
-        <InputWithLabel
-          textLabelStyle={styles.TextLabel}
-          textInputStyle={styles.TextInput}
-          label={'Name'}
-          placeholder={'Type store Name here'}
-          value={name}
-          onChangeText={(name: any) => setName(name)}
-          orientation={'vertical'}
-        />
-
-        <InputWithLabel
-          textLabelStyle={styles.TextLabel}
-          textInputStyle={styles.TextInput}
-          label={'Phone Number'}
-          value={phone}
-          onChangeText={(phone: any) => setPhone(phone)}
-          orientation={'vertical'}
-        />
-
-        <PickerWithLabel
-          textLabelStyle={styles.TextLabel}
-          pickerItemStyle={styles.pickerItemStyle}
-          label={'Category'}
-          items={common.categorys}
-          mode={'dialog'}
-          selectedValue={category}
-          onValueChange={(itemValue: any, itemIndex: any) => setCategory(itemValue)}
-          orientation={'vertical'}
-          textStyle={{ fontSize: 24 }}
-        />
-
-        <PickerWithLabel
-          textLabelStyle={styles.TextLabel}
-          pickerItemStyle={styles.pickerItemStyle}
-          label={'Floor'}
-          items={common.floors}
-          mode={'dialog'}
-          selectedValue={floor}
-          onValueChange={(itemValue: any, itemIndex: any) => setFloor(itemValue)}
-          orientation={'vertical'}
-          textStyle={{ fontSize: 24 }}
-        />
-
-        <InputWithLabel
-          textLabelStyle={styles.TextLabel}
-          textInputStyle={styles.TextInput}
-          label={'Extended Floor'}
-          value={exfloor}
-          onChangeText={(exfloor: any) => setExfloor(exfloor)}
-          orientation={'vertical'}
-        />
-
-        <InputWithLabel
-          textLabelStyle={styles.TextLabel}
-          textInputStyle={styles.TextInput}
-          label={'Description'}
-          value={description}
-          onChangeText={(description: any) => setDescription(description)}
-          orientation={'vertical'}
-        />
-
-        <AppButton
-          style={styles.button}
-          title={'Save'}
-          theme={'primary'}
-          onPress={_update}
-        />
-      </ScrollView>
+      <Text style={styles.header}>Edit Store</Text>
+      <TextInput
+        placeholder="Store Name"
+        style={styles.input}
+        value={storeName}
+        onChangeText={setStoreName}
+      />
+      <TextInput
+        placeholder="Category"
+        style={styles.input}
+        value={storeCategory}
+        onChangeText={setStoreCategory}
+      />
+      <TextInput
+        placeholder="Floor"
+        style={styles.input}
+        value={storeFloor}
+        onChangeText={setStoreFloor}
+      />
+      <View style={styles.imageContainer}>
+        <Image source={{ uri: localImage }} style={styles.imagePreview} />
+        <TouchableOpacity onPress={handleSelectImage} style={styles.imageButton}>
+          <Text style={styles.imageButtonText}>Select Image</Text>
+        </TouchableOpacity>
+      </View>
+      <Button title="Update Store" onPress={handleUpdate} />
     </View>
   );
 };
@@ -175,32 +93,50 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#fff',
   },
-  TextLabel: {
-    flex: 1,
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginLeft: 3,
-    textAlignVertical: 'center',
-  },
-  TextInput: {
+  header: {
     fontSize: 24,
-    color: '#000099',
+    marginBottom: 20,
   },
-  pickerItemStyle: {
-    fontSize: 20,
-    color: '#000099',
+  input: {
+    borderWidth: 1,
+    borderColor: "#ddd",
+    padding: 8,
+    marginBottom: 10,
+    borderRadius: 4,
   },
-  button: {
-    margin: 5,
-    alignItems: 'center',
+  imageContainer: {
+    alignItems: "center",
+    marginVertical: 20,
   },
-  buttonText: {
-    padding: 20,
-    fontSize: 20,
-    color: 'white',
+  imagePreview: {
+    width: 100,
+    height: 100,
+    marginBottom: 10,
+  },
+  imageButton: {
+    backgroundColor: "#2196F3",
+    padding: 10,
+    borderRadius: 5,
+  },
+  imageButtonText: {
+    color: "white",
+    fontWeight: "bold",
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  errorText: {
+    fontSize: 18,
+    color: "red",
+    marginBottom: 20,
   },
 });
 
 export default EditScreen;
+function alert(arg0: string) {
+  throw new Error("Function not implemented.");
+}
+
