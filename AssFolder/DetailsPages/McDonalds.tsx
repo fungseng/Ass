@@ -5,7 +5,7 @@ import { stores } from '../CommonData'; // Import the stores object
 import G01 from '../MapPages/G01';
 const McDonalds = () => {
   const navigation = useNavigation();
-  const storeData = stores.enrichment.find(store => store.id === 3);
+  const storeData = stores.food.find(store => store.id === 3);
 
   return (
     <View style={styles.container}>
