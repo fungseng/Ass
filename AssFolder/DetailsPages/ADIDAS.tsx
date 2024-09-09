@@ -1,24 +1,29 @@
+// screens/ADIDAS.tsx
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, Alert } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { stores } from '../CommonData'; // Import the stores object
 import { useUserRole } from '../UserRoleContext'; // Context to get the user role
 import { FloatingAction } from 'react-native-floating-action';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import G42 from '../MapPages/G42';
+import { RootStackParamList } from '../types'; // Import type definitions
+
 const ADIDAS = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const storeData = stores.sports.find(store => store.id === 1);
   const { userRole } = useUserRole(); 
+
   // Edit function
   const handleEdit = () => {
-    // Navigate to an Edit Screen with storeData as a parameter
-    navigation.navigate('EditScreen', { storeData });
+    if (storeData) {
+      navigation.navigate('EditScreen', { storeData });
+    } else {
+      Alert.alert('Error', 'Store data not provided');
+    }
   };
 
   // Delete function
   const handleDelete = () => {
-    // Confirmation alert
     Alert.alert(
       'Delete Store',
       'Are you sure you want to delete this store?',
@@ -31,7 +36,6 @@ const ADIDAS = () => {
           text: 'Delete',
           style: 'destructive',
           onPress: () => {
-            // Logic to delete the store
             console.log('Store deleted'); // Replace with your delete logic
           },
         },
@@ -62,12 +66,9 @@ const ADIDAS = () => {
 
   const Actions = [...(userRole === 'admin' ? actionsForAdmin : [])];
 
-
   return (
     <View style={styles.container}>
-     <Image source={storeData?.localImage ? storeData.localImage : undefined}
-  style={styles.storeImage}
-/>
+      <Image source={storeData?.localImage || undefined} style={styles.storeImage} />
       <View style={styles.storeInfo}>
         <View style={styles.storeDetails}>
           <Text style={styles.category}>Sports and Shoes</Text>
@@ -75,17 +76,15 @@ const ADIDAS = () => {
           <Text style={styles.floor}>{storeData?.floor}</Text>
           <Text style={styles.phoneNumber}>{storeData?.phone}</Text>
         </View>
-        
         <TouchableOpacity
           style={styles.mapButton}
-          onPress={() => navigation.navigate(G42)} // Update with correct route name
+          onPress={() => navigation.navigate('G42')}
         >
           <Text style={styles.mapButtonText}>Map</Text>
         </TouchableOpacity>
       </View>
       <Text style={styles.description}>{storeData?.description}</Text>
-        {/* Floating Action Buttons (Visible only for admins) */}
-        {userRole === 'admin' && (
+      {userRole === 'admin' && (
         <FloatingAction
           actions={Actions}
           onPressItem={handleActionPress}
@@ -93,12 +92,11 @@ const ADIDAS = () => {
         />
       )}
     </View>
-
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, bottom: 50, },
+  container: { flex: 1, padding: 16, bottom: 50 },
   storeImage: {
     width: '100%',
     height: 200,
@@ -145,7 +143,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
-    alignItems: 'center', // Center the text
+    alignItems: 'center',
   },
   mapButtonText: {
     color: '#fff',
