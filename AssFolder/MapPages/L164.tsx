@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { View, StyleSheet, Image, TouchableOpacity, Text,ScrollView } from "react-native";
 
 
-const L163 = () => {
-  const [imageSource, setImageSource] = useState(require('./MapImg/L163.png'));
+const L164 = () => {
+  const [imageSource, setImageSource] = useState(require('./MapImg/L164.png'));
 
   return (
     <View style={styles.container}>
@@ -23,7 +23,7 @@ const L163 = () => {
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.button}
-          onPress={() => {setImageSource(require('./MapImg/L163.png'));
+          onPress={() => {setImageSource(require('./MapImg/L164.png'));
           }}>
           <Text style={styles.buttonText}>F1</Text>
         </TouchableOpacity>
@@ -44,7 +44,7 @@ const L163 = () => {
     </View>
   );
 };
-export default L163;
+export default L164;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -80,3 +80,4 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
 });
+
