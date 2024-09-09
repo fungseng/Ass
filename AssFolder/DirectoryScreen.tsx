@@ -11,14 +11,29 @@ import {View,
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { stores, Store } from "./CommonData"; // Update with your actual path
 import { useNavigation } from '@react-navigation/native';
+import { useUserRole } from './UserRoleContext';
+import { FloatingAction } from 'react-native-floating-action';
+import CreateScreen from './CreateScreen';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from './App'; 
 
 const { height } = Dimensions.get('window');
+type DirectoryScreenNavigationProp = StackNavigationProp<RootStackParamList, 'DirectoryScreen'>;
+const actionsForAdmin = [
+  {
+    text: 'Add',
+    icon: require('../icons/add_icon.png'), // Make sure to provide the correct path to the icon
+    name: 'add',
+    position: 1,
+  },
+];
 
 const DirectoryScreen = () => {
   const [activeTab, setActiveTab] = useState("Bakery"); // Track the active tab
   const scrollViewRef = useRef<ScrollView>(null);
   const sectionPositions = useRef<{ [key: string]: number }>({}); // Store positions of sections
-  const navigation = useNavigation();
+  const navigation = useNavigation<DirectoryScreenNavigationProp>(); // Use typed navigation
+  const { userRole } = useUserRole();
 
   const handleScrollTo = (section: string) => {
     setActiveTab(section); // Set active tab when a button is pressed
@@ -35,6 +50,16 @@ const DirectoryScreen = () => {
   const handlePress = (storeName: string) => {
     navigation.navigate(storeName); // Navigate to the specific store screen
   };
+  const handleActionPress = (name: string) => {
+    console.log('Action pressed:', name); // Debugging line
+    if (name === 'add') {
+      console.log('Navigating to CreateScreen'); // Debugging line
+      navigation.navigate( 'CreateScreen');
+
+    }
+  };
+
+  const Actions = [...(userRole === 'admin' ? actionsForAdmin : [])];
 
   return (
     <View style={styles.container}>
@@ -221,6 +246,16 @@ const DirectoryScreen = () => {
             <StoreSection title="Sports and Shoes Section" storeData={stores.sports} onPress={handlePress} />
           </View>
         </ScrollView>
+        <View style={styles.floatingActionContainer}>
+      {userRole === 'admin' && (
+        <FloatingAction
+          actions={Actions}
+          onPressItem={(name) => handleActionPress(name)}
+          color="blue"
+         
+        />
+      )}
+      </View>
       </View>
     </View>
   );
@@ -306,6 +341,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center', // Center the text vertically
     backgroundColor: '#c85757', // Keep the background color
     paddingHorizontal: 20, // Add some padding for a better look
+  },
+  floatingActionContainer: {
+    bottom: 30,
   },
 });
 
