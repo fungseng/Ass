@@ -69,8 +69,8 @@ const AdminLoginScreen: React.FC<Props> = ({ navigation }) => {
       ) : (
         <>
           <Text style={styles.title}>Admin Credentials</Text>
-          <Text style={styles.info}>Username: Admin01</Text>
-          <Text style={styles.info}>Password: nigawat</Text>
+          <Text style={styles.info}>Username: 1</Text>
+          <Text style={styles.info}>Password: 1</Text>
           <Button title="Log Out" onPress={handleLogout} />
         </>
       )}
