@@ -99,82 +99,87 @@ import G05 from "./MapPages/G05";
 import G42 from "./MapPages/G42";
 import L161 from "./MapPages/L161";
 import L174 from "./MapPages/L174";
+import { stores ,Store} from "./CommonData";
 
 //add more here later
 const Stack = createStackNavigator();
+// Function to map store components dynamically
 
 const DirectoryStack = () => {
   return (
     <Stack.Navigator>
+
+      
       <Stack.Screen
         name="Directory"
         component={DirectoryScreen}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="Bread Story"component={BreadStory}options={{ title: "Details" }}/> 
-      <Stack.Screen name="Hogan Bakery" component={HoganBakery} options={{ title: "Details" }}/>
+       
+       <Stack.Screen name={stores.bakery[0].name}component={BreadStory}options={{ title: "Details" }}/> 
+      <Stack.Screen name={stores.bakery[1].name} component={HoganBakery} options={{ title: "Details" }}/>
 
-      <Stack.Screen name="Russell Salon" component={RussellSalon} options={{ title: "Details" }}/>
-      <Stack.Screen name="The Nail Shop" component={TheNailShop} options={{ title: "Details" }}/>
-      <Stack.Screen name="AsterSpring" component={AsterSpring} options={{ title: "Details" }}/>
+      <Stack.Screen name={stores.beauty[0].name} component={RussellSalon} options={{ title: "Details" }}/>
+      <Stack.Screen name={stores.beauty[1].name} component={TheNailShop} options={{ title: "Details" }}/>
+      <Stack.Screen name={stores.beauty[2].name} component={AsterSpring} options={{ title: "Details" }}/>
 
-      <Stack.Screen name="Popular" component={Popular} options={{ title: "Details" }}/>
-      <Stack.Screen name="Pop Mart" component={PopMart} options={{ title: "Details" }}/>
-      <Stack.Screen name="Balloon Wonderland Part Shop" component={Balloon} options={{ title: "Details" }}/>
+      <Stack.Screen name={stores.books[0].name} component={Popular} options={{ title: "Details" }}/>
+      <Stack.Screen name={stores.books[1].name} component={PopMart} options={{ title: "Details" }}/>
+      <Stack.Screen name={stores.books[2].name} component={Balloon} options={{ title: "Details" }}/>
 
-      <Stack.Screen name="Aeon1" component={Aeon1} options={{ title: "Details" }}/>
-      <Stack.Screen name="Aeon2" component={Aeon2} options={{ title: "Details" }}/>
+      <Stack.Screen name={stores.department[0].name} component={Aeon1} options={{ title: "Details" }}/>
+      <Stack.Screen name={stores.department[1].name} component={Aeon2} options={{ title: "Details" }}/>
 
-      <Stack.Screen name="Samsung" component={Samsung} options={{ title: "Details" }}/>
-      <Stack.Screen name="Vivo" component={Vivo} options={{ title: "Details" }}/>
+      <Stack.Screen name={stores.digital[0].name} component={Samsung} options={{ title: "Details" }}/>
+      <Stack.Screen name={stores.digital[1].name} component={Vivo} options={{ title: "Details" }}/>
 
-      <Stack.Screen name="Box Hunt" component={BoxHunt} options={{ title: "Details" }}/>
-      <Stack.Screen name="Gamer's Hideout" component={GamersHideout} options={{ title: "Details" }}/>
-      <Stack.Screen name="Yamaha Music" component={YamahaMusic} options={{ title: "Details" }}/>
+      <Stack.Screen name={stores.enrichment[0].name}component={BoxHunt} options={{ title: "Details" }}/>
+      <Stack.Screen name={stores.enrichment[1].name} component={GamersHideout} options={{ title: "Details" }}/>
+      <Stack.Screen name={stores.enrichment[2].name} component={YamahaMusic} options={{ title: "Details" }}/>
 
-      <Stack.Screen name="Cheetah" component={Cheetah} options={{ title: "Details" }}/>
-      <Stack.Screen name="Cotton On" component={CottonOn} options={{ title: "Details" }}/>
-      <Stack.Screen name="FOS" component={FOS} options={{ title: "Details" }}/>
-      <Stack.Screen name="H&M" component={HnM} options={{ title: "Details" }}/>
-      <Stack.Screen name="Levi'Store" component={LevisStore} options={{ title: "Details" }}/>
-      <Stack.Screen name="Uniqlo" component={Uniqlo} options={{ title: "Details" }}/>
+      <Stack.Screen name={stores.fashion[0].name} component={Cheetah} options={{ title: "Details" }}/>
+      <Stack.Screen name={stores.fashion[1].name}component={CottonOn} options={{ title: "Details" }}/>
+      <Stack.Screen name={stores.fashion[2].name} component={FOS} options={{ title: "Details" }}/>
+      <Stack.Screen name={stores.fashion[3].name}component={HnM} options={{ title: "Details" }}/>
+      <Stack.Screen name={stores.fashion[4].name} component={LevisStore} options={{ title: "Details" }}/>
+      <Stack.Screen name={stores.fashion[5].name}component={Uniqlo} options={{ title: "Details" }}/>
 
-      <Stack.Screen name="KFC" component={KFC} options={{ title: "Details" }}/>
-      <Stack.Screen name="Burger King" component={BurgerKing} options={{ title: "Details" }}/>
-      <Stack.Screen name="Mc Donalds" component={McDonalds} options={{ title: "Details" }}/>
-      <Stack.Screen name="BIBI's Popiah" component={BIBI} options={{ title: "Details" }}/>
-      <Stack.Screen name="Kenny Rogers Roaster" component={KRR} options={{ title: "Details" }}/>
-      <Stack.Screen name="Secret Recipe" component={SecretRecipe} options={{ title: "Details" }}/>
-      <Stack.Screen name="Seoul Garden" component={SeoulGarden} options={{ title: "Details" }}/>
-      <Stack.Screen name="StarBucks" component={StarBucks} options={{ title: "Details" }}/>
-      <Stack.Screen name="Sushi King" component={SushiKing} options={{ title: "Details" }}/>
+      <Stack.Screen name={stores.food[0].name}component={KFC} options={{ title: "Details" }}/>
+      <Stack.Screen name={stores.food[1].name} component={BurgerKing} options={{ title: "Details" }}/>
+      <Stack.Screen name={stores.food[2].name} component={McDonalds} options={{ title: "Details" }}/>
+      <Stack.Screen name={stores.food[3].name}component={BIBI} options={{ title: "Details" }}/>
+      <Stack.Screen name={stores.food[4].name} component={KRR} options={{ title: "Details" }}/>
+      <Stack.Screen name={stores.food[5].name} component={SecretRecipe} options={{ title: "Details" }}/>
+      <Stack.Screen name={stores.food[6].name}component={SeoulGarden} options={{ title: "Details" }}/>
+      <Stack.Screen name={stores.food[7].name} component={StarBucks} options={{ title: "Details" }}/>
+      <Stack.Screen name={stores.food[8].name} component={SushiKing} options={{ title: "Details" }}/>
 
-      <Stack.Screen name="Food District" component={FoodDistrict} options={{ title: "Details" }}/>
+      <Stack.Screen name={stores.foodcourt[0].name} component={FoodDistrict} options={{ title: "Details" }}/>
 
-      <Stack.Screen name="TGV Cinemas" component={TGV} options={{ title: "Details" }}/>
-      <Stack.Screen name="Karaoke Manekineko" component={Karaoke} options={{ title: "Details" }}/>
+      <Stack.Screen name={stores.entertainment[0].name}component={TGV} options={{ title: "Details" }}/>
+      <Stack.Screen name={stores.entertainment[1].name} component={Karaoke} options={{ title: "Details" }}/>
 
-      <Stack.Screen name="GINTELL" component={GINTELL} options={{ title: "Details" }}/>
-      <Stack.Screen name="Guardian" component={Guardian} options={{ title: "Details" }}/>
-      <Stack.Screen name="Watson" component={Watson} options={{ title: "Details" }}/>
+      <Stack.Screen name={stores.health[0].name}component={GINTELL} options={{ title: "Details" }}/>
+      <Stack.Screen name={stores.health[1].name} component={Guardian} options={{ title: "Details" }}/>
+      <Stack.Screen name={stores.health[2].name} component={Watson} options={{ title: "Details" }}/>
 
-      <Stack.Screen name="Daiso" component={Daiso} options={{ title: "Details" }}/>
-      <Stack.Screen name="MR DIY" component={MRDIY} options={{ title: "Details" }}/>
+      <Stack.Screen name={stores.lifestyle[0].name}component={Daiso} options={{ title: "Details" }}/>
+      <Stack.Screen name={stores.lifestyle[1].name} component={MRDIY} options={{ title: "Details" }}/>
 
-      <Stack.Screen name="MyNews" component={MyNews} options={{ title: "Details" }}/>
-      <Stack.Screen name="MixStore" component={MixStore} options={{ title: "Details" }}/>
-      <Stack.Screen name="CU" component={CU} options={{ title: "Details" }}/>
+      <Stack.Screen name={stores.convienience[0].name} component={MyNews} options={{ title: "Details" }}/>
+      <Stack.Screen name={stores.convienience[1].name} component={MixStore} options={{ title: "Details" }}/>
+      <Stack.Screen name={stores.convienience[2].name}component={CU} options={{ title: "Details" }}/>
 
-      <Stack.Screen name="Baskin Robbins" component={BaskinRobbins} options={{ title: "Details" }}/>
-      <Stack.Screen name="Bee Cheng Hiang" component={BeeChengHiang} options={{ title: "Details" }}/>
-      <Stack.Screen name="Inside Scoop" component={InsideScoop} options={{ title: "Details" }}/>
+      <Stack.Screen name={stores.snacks[0].name} component={BaskinRobbins} options={{ title: "Details" }}/>
+      <Stack.Screen name={stores.snacks[1].name} component={BeeChengHiang} options={{ title: "Details" }}/>
+      <Stack.Screen name={stores.snacks[2].name} component={InsideScoop} options={{ title: "Details" }}/>
 
-      <Stack.Screen name="ADIDAS" component={ADIDAS} options={{ title: "Details" }}/>
-      <Stack.Screen name="NIKE" component={NIKE} options={{ title: "Details" }}/>
-      <Stack.Screen name="Decathlon" component={Decathlon} options={{ title: "Details" }}/> 
+      <Stack.Screen name={stores.sports[0].name} component={ADIDAS} options={{ title: "Details" }}/>
+      <Stack.Screen name={stores.sports[1].name} component={NIKE} options={{ title: "Details" }}/>
+      <Stack.Screen name={stores.sports[2].name} component={Decathlon} options={{ title: "Details" }}/> 
+  
 
-
-      {/* Map Screens add more here,remenber to change name up*/}
+      
       <Stack.Screen name="G22" component={G22} options={{ title: "Map" }}/>
       <Stack.Screen name="G26" component={G26} options={{ title: "Map" }}/>
       <Stack.Screen name="L152" component={L152} options={{ title: "Map" }}/>
@@ -223,7 +228,7 @@ const DirectoryStack = () => {
       <Stack.Screen name="L161" component={L161} options={{ title: "Map" }}/>
       <Stack.Screen name="L174" component={L174} options={{ title: "Map" }}/>
 
-      
+
 
     </Stack.Navigator>
 
